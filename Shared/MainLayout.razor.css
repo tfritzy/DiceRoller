@@ -1,0 +1,196 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    border-radius: 5px;
+    flex: 1;
+    box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+    margin: 1eX;
+    border-width: 1px;
+}
+
+.sidebar {
+    border-radius: 5px;
+    margin: 1eX;
+    box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
+    border-width: 1px;
+}
+
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.top-row ::deep a,
+.top-row .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+}
+
+.top-row a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth) {
+        display: none;
+    }
+    .top-row.auth {
+        justify-content: space-between;
+    }
+    .top-row a,
+    .top-row .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+    .sidebar {
+        width: 25vw;
+        height: 97vh;
+        position: sticky;
+        top: 0;
+    }
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .main>div {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+h1 {
+    color: white;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border-top: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+DiceBox {
+    border-radius: 1px;
+    padding-top: 10px;
+    height: 100%;
+    display: block;
+    padding: 20px;
+    margin: 5px;
+}
+
+Dice {
+    height: 75px;
+    width: 75px;
+    background-color: grey;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 3px;
+    padding: 2px;
+}
+
+input#DiceDots {
+    width: 75px;
+    height: 75px;
+}
+
+input#smallInput {
+    width: 60px;
+    border-radius: 5px;
+    border-width: 0px;
+    padding: 4px;
+    margin: 3px;
+    border-width: 1px;
+    border-color: grey;
+}
+
+input#icon {
+    width: 40px;
+    height: 40px;
+    display: block;
+}
+
+table#configureTable {
+    table-layout: fixed;
+}
+
+button#colorSelect {
+    border-radius: 15px;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin: 3px;
+    border-width: 0px;
+}
+
+button#selectShape {
+    border-radius: 5px;
+    margin: 3px;
+    border-width: 0px;
+    width: 4eX;
+    background-color: lightgray;
+    padding: 4px;
+}
+
+button#delete {
+    border-radius: 5px;
+    width: 3eX;
+    height: 3eX;
+    display: inline-block;
+    background-color: #E64A39;
+    color: white;
+    border-width: 0px;
+    font-size: x-large;
+}
+
+input#plusButton {
+    border-radius: 5px;
+    width: 4eX;
+    height: 4eX;
+    background-color: #3bb958;
+    padding: 6px;
+    margin: 5px;
+    margin-left: 10px;
+}
+
+button#roll {
+    border-radius: 8px;
+    width: 8eX;
+    height: 5eX;
+    display: inline-block;
+    background-color: #d2b75f;
+    color: white;
+    border-width: 0px;
+    font-weight: 400;
+}
+
+h1#dieText {
+    text-align: center;
+    display: table-cell;
+    margin: auto;
+    display: table;
+    padding-top: 12px;
+    width: 75px;
+    height: 75px;
+    border-radius: 15px;
+}

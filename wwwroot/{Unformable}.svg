@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Krita: https://krita.org -->
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:krita="http://krita.org/namespaces/svg/krita"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    width="2232pt"
+    height="2241pt"
+    viewBox="0 0 2232 2241">
+<defs>
+  <radialGradient id="gradient0" gradientUnits="objectBoundingBox" cx="0.162011171804546" cy="0.139664803279781" fx="0" fy="0" r="1.47706270549311" spreadMethod="pad">
+   <stop stop-color="#f0f0f0" offset="0" stop-opacity="1"/>
+   <stop stop-color="#525252" offset="1" stop-opacity="1"/>
+  </radialGradient>
+ </defs>
+<circle id="shape0" transform="translate(310.5, 240.75)" r="805.5" cx="805.5" cy="805.5" fill="url(#gradient0)" fill-rule="evenodd" stroke="#000000" stroke-opacity="0" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel"/>
+</svg>

@@ -1,0 +1,204 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <table id="configureTable">
+            <tr>
+                <th style="width:60px">Shape</th>
+                <th style="width:8eX">Count</th>
+                <th>Color</th>
+                <th>Side Count</th>
+                <th style="width:8eX">Delete</th>
+            </tr>
+            @for (int i = 0; i < Dice.Count; i++)
+            {
+                int index = i;
+                <tr>
+                    <td>
+                        <input type="image" id="icon" src="{@GetShape(Dice[index].SideCount)}.svg">
+                    </td>
+                    <td><input type="number" id="smallInput" min="1" @bind=@Dice[index].Count></td>
+                    <td>
+                        @for (int j = 0; j < DefaultColors.Length; j++)
+                        {
+                            int colorIndex = j;
+                            <button id="colorSelect" style="background-color: #@DefaultColors[colorIndex]"
+                        @onclick="() => SetColor(index, DefaultColors[colorIndex])"></button>
+                        }
+                    </td>
+                    <td>
+                        @foreach (int shape in Shapes)
+                        {
+                            int sideCount = shape;
+                            string color = shape == Dice[index].SideCount ? "#65ED99" : "lightgrey";
+                            <button id="selectShape" style="background-color: @color"
+                        @onclick="() => SetSideCount(index, sideCount)">@sideCount</button>
+                        }
+                        <input type="number" name="dieColor" @bind=@Dice[index].SideCount id="smallInput" min="1">
+                    </td>
+                    <th><button id="delete" @onclick="() => Delete(index)">x</button></th>
+                </tr>
+            }
+            <tr>
+                <input type="image" src="Plus.svg" id="plusButton" @onclick="AddDie" />
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="main">
+
+        <DiceBox>
+            @foreach (DiceDetails die in Dice)
+            {
+                @for (int i = 0; i < die.Count; i++)
+                {
+                    <Dice>
+                        @if (die.SideCount == 6)
+                        {
+                            <input type="image" src="{@die.Values[i]}.svg"
+                    style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
+                        }
+                        else
+                        {
+                            <h1 id="dieText" style="background-color: #@die.Color">@die.Values[i]</h1>
+                        }
+                    </Dice>
+                }
+            }
+
+            <td><button id="roll" @onclick="Roll">Roll</button></td>
+
+        </DiceBox>
+    </div>
+</div>
+
+@code {
+    public List<DiceDetails> Dice = new List<DiceDetails> { };
+
+    protected override void OnInitialized()
+    {
+        Dice.Add(BuildDefaultDie());
+    }
+
+    public class DiceDetails
+    {
+        public List<int> Values;
+        private int sideCount;
+        public int SideCount
+        {
+            get
+            {
+                return sideCount;
+            }
+            set
+            {
+                sideCount = Math.Abs(value);
+
+                if (Values == null)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < Values.Count; i++)
+                {
+                    if (Values[i] > SideCount)
+                    {
+                        Values[i] = sideCount;
+                    }
+                }
+            }
+        }
+        public string Color;
+        private int count;
+        public int Count
+        {
+            get
+            {
+                return count;
+            }
+            set
+            {
+                count = Math.Abs(value);
+                while (count < Values.Count)
+                {
+                    Values.RemoveAt(Values.Count - 1);
+                }
+
+                while (count > Values.Count)
+                {
+                    Values.Add(1);
+                }
+            }
+        }
+    }
+
+    public int[] Shapes = new int[] { 4, 6, 8, 10, 12, 20, };
+    public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "E64A39", "de8355", "EDD157", "6acd90", "5F8BE9",
+"9973c2", };
+
+    public void AddDie()
+    {
+        Dice.Add(BuildDefaultDie());
+    }
+
+    public void Roll()
+    {
+        Random random = new Random();
+        for (int i = 0; i < Dice.Count; i++)
+        {
+            for (int j = 0; j < Dice[i].Count; j++)
+            {
+                Dice[i].Values[j] = random.Next(1, Dice[i].SideCount + 1);
+            }
+        }
+    }
+
+    public void Delete(int i)
+    {
+        Dice.RemoveAt(i);
+    }
+
+    public void SetSideCount(int i, int sideCount)
+    {
+        Dice[i].SideCount = sideCount;
+    }
+
+    public void SetColor(int i, string color)
+    {
+        Dice[i].Color = color;
+    }
+
+    public string GetShape(int sideCount)
+    {
+        switch (sideCount)
+        {
+            case (4):
+                return "Tetrahedron";
+            case (6):
+                return "Cube";
+            case (8):
+                return "Octahedron";
+            case (10):
+                return "Pentagonal Trapezohedron";
+            case (12):
+                return "Dodecahedron";
+            case (20):
+                return "Icosahedron";
+            default:
+                return "Unformable";
+        }
+    }
+
+    private DiceDetails BuildDefaultDie()
+    {
+        return new DiceDetails
+        {
+            Color = DefaultColors[0],
+            SideCount = 6,
+            Values = new List<int>() { 1 },
+            Count = 1,
+        };
+    }
+}
