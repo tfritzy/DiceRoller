@@ -10,6 +10,7 @@
     box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
     margin: 1eX;
     border-width: 1px;
+    overflow-y: auto;
 }
 
 .sidebar {
@@ -17,6 +18,7 @@
     margin: 1eX;
     box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
     border-width: 1px;
+    overflow-y: auto;
 }
 
 .top-row {
@@ -50,6 +52,12 @@
     .top-row .btn-link {
         margin-left: 0;
     }
+    .sidebar {
+        max-height: 33vh;
+    }
+    .main {
+        max-height: 67vh;
+    }
 }
 
 @media (min-width: 1573px) {
@@ -71,6 +79,12 @@
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+    .sidebar {
+        max-height: 98vh;
+    }
+    .main {
+        max-height: 98vh;
+    }
 }
 
 h1 {
@@ -86,6 +100,7 @@ table {
 td,
 th {
     border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
@@ -96,22 +111,38 @@ DiceBox {
     height: 100%;
     display: block;
     padding: 20px;
-    margin: 5px;
 }
 
-Dice {
-    height: 75px;
+div#diceSquare {
     width: 75px;
-    background-color: grey;
-    border-radius: 15px;
+    height: 75px;
     display: inline-block;
-    margin: 3px;
-    padding: 2px;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
-input#DiceDots {
+div#face {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    margin: 10px;
+    margin-top: 14px;
+    border-radius: 15px;
+}
+
+div#outline {
     width: 75px;
     height: 75px;
+    position: absolute;
+}
+
+input#dieDots {
+    width: 75px;
+    height: 75px;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #7b7b7b;
 }
 
 input#smallInput {
@@ -128,6 +159,7 @@ input#icon {
     width: 40px;
     height: 40px;
     display: block;
+    margin-left: 3px;
 }
 
 table#configureTable {
@@ -140,7 +172,9 @@ button#colorSelect {
     height: 25px;
     display: inline-block;
     margin: 3px;
-    border-width: 0px;
+    border-width: 2px;
+    border-color: white;
+    border-style: solid;
 }
 
 button#selectShape {
@@ -152,15 +186,14 @@ button#selectShape {
     padding: 4px;
 }
 
-button#delete {
+input#delete {
     border-radius: 5px;
-    width: 3eX;
-    height: 3eX;
+    width: 4eX;
+    height: 4eX;
     display: inline-block;
     background-color: #E64A39;
-    color: white;
     border-width: 0px;
-    font-size: x-large;
+    padding: 3px;
 }
 
 input#plusButton {
@@ -178,19 +211,20 @@ button#roll {
     width: 8eX;
     height: 5eX;
     display: inline-block;
-    background-color: #d2b75f;
+    background-color: #89a7e3;
     color: white;
     border-width: 0px;
-    font-weight: 400;
+    font-style: bold;
 }
 
 h1#dieText {
     text-align: center;
-    display: table-cell;
-    margin: auto;
     display: table;
     padding-top: 12px;
     width: 75px;
     height: 75px;
     border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #7b7b7b;
 }

@@ -5,7 +5,7 @@
         <table id="configureTable">
             <tr>
                 <th style="width:60px">Shape</th>
-                <th style="width:8eX">Count</th>
+                <th style="width:10eX">Count</th>
                 <th>Color</th>
                 <th>Side Count</th>
                 <th style="width:8eX">Delete</th>
@@ -22,7 +22,9 @@
                         @for (int j = 0; j < DefaultColors.Length; j++)
                         {
                             int colorIndex = j;
-                            <button id="colorSelect" style="background-color: #@DefaultColors[colorIndex]"
+                            string borderColor = Dice[index].Color == DefaultColors[colorIndex] ? "#545454" : "white";
+                            <button id="colorSelect"
+                        style="background-color: #@DefaultColors[colorIndex]; border-color: @borderColor"
                         @onclick="() => SetColor(index, DefaultColors[colorIndex])"></button>
                         }
                     </td>
@@ -36,7 +38,7 @@
                         }
                         <input type="number" name="dieColor" @bind=@Dice[index].SideCount id="smallInput" min="1">
                     </td>
-                    <th><button id="delete" @onclick="() => Delete(index)">x</button></th>
+                    <th><input type="image" src="x.svg" id="delete" @onclick="() => Delete(index)"></input></th>
                 </tr>
             }
             <tr>
@@ -50,26 +52,24 @@
     <div class="main">
 
         <DiceBox>
+            <td><button id="roll" @onclick="Roll">ROLL</button></td>
             @foreach (DiceDetails die in Dice)
             {
                 @for (int i = 0; i < die.Count; i++)
                 {
-                    <Dice>
+                    <div id="diceSquare">
                         @if (die.SideCount == 6)
                         {
-                            <input type="image" src="{@die.Values[i]}.svg"
-                    style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
+                            <input type="image" id="dieDots" src="{@die.Values[i]}.svg"
+                                style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
                         }
                         else
                         {
-                            <h1 id="dieText" style="background-color: #@die.Color">@die.Values[i]</h1>
+                            <h1 id="dieText" style="background-color:#@die.Color">@die.Values[i]</h1>
                         }
-                    </Dice>
+                    </div>
                 }
             }
-
-            <td><button id="roll" @onclick="Roll">Roll</button></td>
-
         </DiceBox>
     </div>
 </div>
@@ -135,8 +135,18 @@
     }
 
     public int[] Shapes = new int[] { 4, 6, 8, 10, 12, 20, };
-    public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "E64A39", "de8355", "EDD157", "6acd90", "5F8BE9",
-"9973c2", };
+    public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "db7065", "de8355", "EDD157", "77cd7f", "6ccdc5", "5F8BE9",
+"9973c2", "db82d7"};
+    public Dictionary<string, string> ClipPaths = new Dictionary<string, string>()
+{
+{ "Tetrahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
+{ "Cube", "clip-path: inset(4% 4% 3% 4%);"},
+{ "Octahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
+{ "Pentagonal Trapezohedron", "clip-path: polygon(25% 80%, 50% 0, 75% 80%, 50% 100%);"},
+{ "Dodecahedron", "clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"},
+{ "Icosahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
+{ "Unformable", "clip-path: circle(50% at 50% 50%);"}
+};
 
     public void AddDie()
     {
@@ -195,7 +205,7 @@
     {
         return new DiceDetails
         {
-            Color = DefaultColors[0],
+            Color = DefaultColors[new Random().Next(0, DefaultColors.Length)],
             SideCount = 6,
             Values = new List<int>() { 1 },
             Count = 1,
