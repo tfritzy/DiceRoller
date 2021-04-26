@@ -1,7 +1,11 @@
 @inherits LayoutComponentBase
-
+<h1 id="explanation">
+    This is a dice roller where you can configure and roll dice of various count, color, and shape. The intention is that this tool
+    can replace the dice for most die based games. It gives good summarization of each roll hopefully making it easy to interpret the 
+    results for your game. Additionally, it lets you view your previous rolls in a historical roll view.
+</h1>
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar mainPanel">
         <table id="configureTable">
             <tr>
                 <th style="width:60px">Shape</th>
@@ -44,38 +48,50 @@
             <tr>
                 <input type="image" src="Plus.svg" id="plusButton" @onclick="AddDie" />
             </tr>
-
         </table>
-
     </div>
 
-    <div class="main">
-
-        <DiceBox>
-            <td><button id="roll" @onclick="Roll">ROLL</button></td>
-            @foreach (DiceDetails die in Dice)
-            {
-                @for (int i = 0; i < die.Count; i++)
+    <div class="verticalGroup">
+        <div class="main mainPanel">
+            <DiceBox>
+                <td><button id="roll" @onclick="Roll">ROLL</button></td>
+                @foreach (DiceDetails die in Dice)
                 {
-                    <div id="diceSquare">
-                        @if (die.SideCount == 6)
-                        {
-                            <input type="image" id="dieDots" src="{@die.Values[i]}.svg"
-                                style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
-                        }
-                        else
-                        {
-                            <h1 id="dieText" style="background-color:#@die.Color">@die.Values[i]</h1>
-                        }
-                    </div>
+                    @for (int i = 0; i < die.Count; i++)
+                    {
+                        <div id="diceSquare">
+                            @if (die.SideCount == 6)
+                            {
+                                <input type="image" id="dieDots" src="{@die.Values[i]}.svg"
+                                    style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
+                            }
+                            else
+                            {
+                                <h1 id="dieText" style="background-color:#@die.Color">@die.Values[i]</h1>
+                            }
+                        </div>
+                    }
                 }
+            </DiceBox>
+        </div>
+
+        <div class="history mainPanel">
+            @for (int i = History.Count - 1; i >= 0; i--)
+            {
+                int turn = i + 1;
+                string highlight = CurrentHistoryIndex == turn - 1 ? "border-width: 3px" : "border-width: 0px";
+                <div id="historyBox">
+                    <button @onclick="() => ViewTurn(turn-1)" id="viewHistoryButton" style=@highlight>@turn</button>
+                </div>
             }
-        </DiceBox>
+        </div>
     </div>
 </div>
 
 @code {
     public List<DiceDetails> Dice = new List<DiceDetails> { };
+    public int CurrentHistoryIndex;
+    public List<List<DiceDetails>> History = new List<List<DiceDetails>>();
 
     protected override void OnInitialized()
     {
@@ -84,6 +100,11 @@
 
     public class DiceDetails
     {
+        public DiceDetails()
+        {
+            this.Values = new List<int>();
+        }
+
         public List<int> Values;
         private int sideCount;
         public int SideCount
@@ -132,21 +153,22 @@
                 }
             }
         }
+
+        public DiceDetails Copy()
+        {
+            return new DiceDetails 
+            {
+                Color = this.Color,
+                Count = this.Count,
+                SideCount = this.SideCount,
+                Values = new List<int>(this.Values),
+            };
+        }
     }
 
     public int[] Shapes = new int[] { 4, 6, 8, 10, 12, 20, };
     public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "db7065", "de8355", "EDD157", "77cd7f", "6ccdc5", "5F8BE9",
 "9973c2", "db82d7"};
-    public Dictionary<string, string> ClipPaths = new Dictionary<string, string>()
-{
-{ "Tetrahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
-{ "Cube", "clip-path: inset(4% 4% 3% 4%);"},
-{ "Octahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
-{ "Pentagonal Trapezohedron", "clip-path: polygon(25% 80%, 50% 0, 75% 80%, 50% 100%);"},
-{ "Dodecahedron", "clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"},
-{ "Icosahedron", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"},
-{ "Unformable", "clip-path: circle(50% at 50% 50%);"}
-};
 
     public void AddDie()
     {
@@ -163,6 +185,8 @@
                 Dice[i].Values[j] = random.Next(1, Dice[i].SideCount + 1);
             }
         }
+        History.Add(CopyDiceDetails());
+        CurrentHistoryIndex = History.Count-1;
     }
 
     public void Delete(int i)
@@ -201,6 +225,12 @@
         }
     }
 
+    public void ViewTurn(int turnCount)
+    {
+        this.Dice = History[turnCount];
+        this.CurrentHistoryIndex = turnCount;
+    }
+
     private DiceDetails BuildDefaultDie()
     {
         return new DiceDetails
@@ -210,5 +240,15 @@
             Values = new List<int>() { 1 },
             Count = 1,
         };
+    }
+
+    private List<DiceDetails> CopyDiceDetails()
+    {
+        List<DiceDetails> copy = new List<DiceDetails>();
+        foreach (DiceDetails diceDetails in Dice)
+        {
+            copy.Add(diceDetails.Copy());
+        }
+        return copy;
     }
 }
