@@ -5,6 +5,7 @@
     overflow-y: hidden;
     padding-top: 10px;
     padding-left: 10px;
+    overflow: hidden;
 }
 
 .mainPanel {
@@ -350,6 +351,7 @@ h4#title {
     margin: 15px;
     margin-top: 10px;
     margin-bottom: 0px;
+    font-size: 1.2rem;
 }
 
 img#decal {
