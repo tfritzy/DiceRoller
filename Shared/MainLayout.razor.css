@@ -2,15 +2,19 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .mainPanel {
-    border-radius: 5px;
     box-shadow: 0 15px 35px 0 rgb(60 66 87 / 8%), 0 5px 15px 0 rgb(0 0 0 / 12%);
-    margin-top: 10px;
+    border-radius: 15px;
+    border-color: grey;
+    border-width: 1px;
+    border-style: solid;
     margin-bottom: 10px;
     margin-right: 10px;
-    border-width: 1px;
 }
 
 .main {
@@ -26,11 +30,15 @@
     overflow-x: auto;
 }
 
+.stats {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .history {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: 5px;
 }
 
 .top-row {
@@ -64,11 +72,23 @@
     .top-row .btn-link {
         margin-left: 0;
     }
+    .page {
+        padding: 5px;
+    }
     .sidebar {
-        max-height: 33vh;
+        height: 25.5vh;
+    }
+    .mainPanel {
+        margin-bottom: 5px;
     }
     .main {
-        max-height: 67vh;
+        height: 45vh;
+    }
+    .stats {
+        height: 13.5vh
+    }
+    .history {
+        height: 13vh;
     }
 }
 
@@ -78,7 +98,7 @@
     }
     .sidebar {
         width: 25vw;
-        height: 98vh;
+        height: 98.2vh;
         position: sticky;
         top: 0;
     }
@@ -93,16 +113,23 @@
     }
     .sidebar {
         max-height: 100vh;
+        width: 40vw;
     }
     .main {
-        max-height: 100vh;
-        width: 75vw;
-        height: 88vh;
+        max-height: 72vh;
+        height: 72vh;
+        width: 66vw;
         overflow: auto;
     }
     .history {
-        width: 75vw;
-        height: 9vh;
+        height: 12vh;
+        max-height: 12vh;
+        width: 66vw;
+    }
+    .stats {
+        height: 12.5vh;
+        max-height: 12.5vh;
+        width: 66vw;
     }
 }
 
@@ -153,8 +180,9 @@ div#diceSquare {
     width: 75px;
     height: 75px;
     display: inline-block;
-    margin-right: 5px;
-    margin-top: 5px;
+    margin-right: 10px;
+    margin-top: 10px;
+    position: relative;
 }
 
 div#face {
@@ -172,13 +200,20 @@ div#outline {
     position: absolute;
 }
 
-input#dieDots {
+img#dieDots {
     width: 75px;
     height: 75px;
     border-radius: 15px;
     border-style: solid;
     border-width: 2px;
     border-color: #7b7b7b;
+    position: absolute;
+}
+
+input#smallDie {
+    width: 75px;
+    height: 75px;
+    position: absolute;
 }
 
 input#smallInput {
@@ -194,7 +229,7 @@ input#smallInput {
 input#icon {
     width: 40px;
     height: 40px;
-    display: block;
+    display: inline-block;
     margin-left: 3px;
 }
 
@@ -255,14 +290,11 @@ button#roll {
 
 h1#dieText {
     text-align: center;
-    display: table;
-    padding-top: 12px;
+    padding-top: 24px;
     width: 75px;
     height: 75px;
-    border-radius: 15px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #7b7b7b;
+    font-size: x-large;
+    position: absolute;
 }
 
 h1#explanation {
@@ -271,13 +303,15 @@ h1#explanation {
 
 div#historyBox {
     margin: 5px;
-    border-radius: 15px;
-    background-color: #dddddd;
+    border-radius: 8px;
+    background-color: #85a9c7;
     width: 75px;
     height: 75px;
     display: inline-block;
     font-size: xx-large;
     text-align: center;
+    margin-left: 10px;
+    position: relative;
 }
 
 button#viewHistoryButton {
@@ -288,10 +322,40 @@ button#viewHistoryButton {
     border-color: royalblue;
     color: white;
     outline: 0;
-    border-radius: 15px;
+    border-radius: 8px;
     border-style: solid;
 }
 
 button:focus {
     outline: 0;
+}
+
+div#sumBox {
+    height: 20px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+div#sumBoxText {
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+    height: 40px;
+    position: absolute;
+    margin-top: 30px;
+    font-size: x-large;
+}
+
+h4#title {
+    margin: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+img#decal {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    left: 0px;
+    margin: 10%;
 }

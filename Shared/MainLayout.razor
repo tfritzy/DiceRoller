@@ -1,7 +1,9 @@
 @inherits LayoutComponentBase
 <h1 id="explanation">
-    This is a dice roller where you can configure and roll dice of various count, color, and shape. The intention is that this tool
-    can replace the dice for most die based games. It gives good summarization of each roll hopefully making it easy to interpret the 
+    This is a dice roller where you can configure and roll dice of various count, color, and shape. The intention is
+    that this tool
+    can replace the dice for most die based games. It gives good summarization of each roll hopefully making it easy to
+    interpret the
     results for your game. Additionally, it lets you view your previous rolls in a historical roll view.
 </h1>
 <div class="page">
@@ -42,7 +44,7 @@
                         }
                         <input type="number" name="dieColor" @bind=@Dice[index].SideCount id="smallInput" min="1">
                     </td>
-                    <th><input type="image" src="x.svg" id="delete" @onclick="() => Delete(index)"></input></th>
+                    <td><input type="image" src="x.svg" id="delete" @onclick="() => Delete(index)"></input></td>
                 </tr>
             }
             <tr>
@@ -62,20 +64,34 @@
                         <div id="diceSquare">
                             @if (die.SideCount == 6)
                             {
-                                <input type="image" id="dieDots" src="{@die.Values[i]}.svg"
-                                    style="background-color: #@die.Color; width: 75px; height: 75px; border-radius: 15px" />
+                                <img type="image" id="dieDots" src="{@die.GetValueAt(i)}.svg" style="background-color: #@die.Color;" />
                             }
                             else
                             {
-                                <h1 id="dieText" style="background-color:#@die.Color">@die.Values[i]</h1>
+                                <h1 id="dieText" style="background-color:#@die.Color">@die.GetValueAt(i)</h1>
                             }
+                            <input type="image" id="smallDie" src="{@GetShape(die.SideCount)} Side.svg">
                         </div>
                     }
                 }
             </DiceBox>
         </div>
 
+        <div class="stats mainPanel">
+            <h4 id="title">Totals</h4>
+            @foreach (DiceDetails die in Dice)
+            {
+                <div id="sumBox">
+                    <div id="diceSquare" title="@die.Sum">
+                        <h1 id="dieText" style="background-color:#@die.Color"> @die.Sum</h1>
+                        <input type="image" id="smallDie" src="{@GetShape(die.SideCount)} Side.svg">
+                    </div>
+                </div>
+            }
+        </div>
+
         <div class="history mainPanel">
+            <h4 id="title">History</h4>
             @for (int i = History.Count - 1; i >= 0; i--)
             {
                 int turn = i + 1;
@@ -105,7 +121,31 @@
             this.Values = new List<int>();
         }
 
-        public List<int> Values;
+        private List<int> Values;
+        public void AddValue(int value)
+        {
+            this.Values.Add(value);
+            Sum += value;
+        }
+
+        public void RemoveValueAt(int index)
+        {
+            Sum -= this.Values[index];
+            this.Values.RemoveAt(index);
+        }
+
+        public int GetValueAt(int index)
+        {
+            return Values[index];
+        }
+
+        public void SetValueAt(int index, int value)
+        {
+            int difference = value - Values[index];
+            Sum += difference;
+            Values[index] = value;
+        }
+
         private int sideCount;
         public int SideCount
         {
@@ -126,7 +166,7 @@
                 {
                     if (Values[i] > SideCount)
                     {
-                        Values[i] = sideCount;
+                        SetValueAt(i, sideCount);
                     }
                 }
             }
@@ -144,30 +184,33 @@
                 count = Math.Abs(value);
                 while (count < Values.Count)
                 {
-                    Values.RemoveAt(Values.Count - 1);
+                    RemoveValueAt(Values.Count - 1);
                 }
 
                 while (count > Values.Count)
                 {
-                    Values.Add(1);
+                    AddValue(1);
                 }
             }
         }
+        public int Sum { get; private set; }
 
         public DiceDetails Copy()
         {
-            return new DiceDetails 
+            return new DiceDetails
             {
                 Color = this.Color,
                 Count = this.Count,
                 SideCount = this.SideCount,
                 Values = new List<int>(this.Values),
+                Sum = this.Sum,
             };
         }
     }
 
     public int[] Shapes = new int[] { 4, 6, 8, 10, 12, 20, };
-    public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "db7065", "de8355", "EDD157", "77cd7f", "6ccdc5", "5F8BE9",
+    public string[] DefaultColors = new string[] { "dbdbdb", "2a2a2a", "db7065", "de8355", "EDD157", "77cd7f", "6ccdc5",
+"5F8BE9",
 "9973c2", "db82d7"};
 
     public void AddDie()
@@ -182,16 +225,16 @@
         {
             for (int j = 0; j < Dice[i].Count; j++)
             {
-                Dice[i].Values[j] = random.Next(1, Dice[i].SideCount + 1);
+                Dice[i].SetValueAt(j, random.Next(1, Dice[i].SideCount + 1));
             }
         }
         History.Add(CopyDiceDetails());
-        CurrentHistoryIndex = History.Count-1;
+        CurrentHistoryIndex = History.Count - 1;
     }
 
-    public void Delete(int i)
+    public void Delete(int index)
     {
-        Dice.RemoveAt(i);
+        this.Dice.RemoveAt(index);
     }
 
     public void SetSideCount(int i, int sideCount)
@@ -237,7 +280,6 @@
         {
             Color = DefaultColors[new Random().Next(0, DefaultColors.Length)],
             SideCount = 6,
-            Values = new List<int>() { 1 },
             Count = 1,
         };
     }
