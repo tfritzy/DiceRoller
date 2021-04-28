@@ -160,6 +160,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    padding: 10px;
 }
 
 td,
@@ -167,7 +168,7 @@ th {
     border-top: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 3px;
 }
 
 DiceBox {
