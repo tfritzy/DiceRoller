@@ -81,11 +81,9 @@
             <h4 id="title">Totals</h4>
             @foreach (DiceDetails die in Dice)
             {
-                <div id="sumBox">
-                    <div id="diceSquare" title="@die.Sum">
-                        <h1 id="dieText" style="background-color:#@die.Color"> @die.Sum</h1>
-                        <input type="image" id="smallDie" src="{@GetShape(die.SideCount)} Side.svg">
-                    </div>
+                <div id="diceSquare" title="@die.Sum">
+                    <h1 id="dieText" style="background-color:#@die.Color"> @die.Sum</h1>
+                    <input type="image" id="smallDie" src="{@GetShape(die.SideCount)} Side.svg">
                 </div>
             }
         </div>
