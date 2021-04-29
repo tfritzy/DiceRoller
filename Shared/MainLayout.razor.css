@@ -1,3 +1,12 @@
+body {
+    height: 100%;
+    position: fixed;
+    /* prevent overscroll bounce*/
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    /* iOS velocity scrolling */
+}
+
 .page {
     position: relative;
     display: flex;
