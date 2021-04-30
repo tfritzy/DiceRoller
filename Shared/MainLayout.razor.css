@@ -308,6 +308,8 @@ button#roll {
     color: white;
     border-width: 0px;
     font-style: bold;
+    margin: 15px;
+    margin-top: 20px;
 }
 
 h1#dieText {

@@ -1,3 +1,4 @@
+@using System.Threading
 @inherits LayoutComponentBase
 <h1 id="explanation">
     This is a dice roller where you can configure and roll dice of various count, color, and shape. The intention is
@@ -6,6 +7,12 @@
     interpret the
     results for your game. Additionally, it lets you view your previous rolls in a historical roll view.
 </h1>
+<img type="image" id="dieDots" src="{1}.svg" />
+<img type="image" id="dieDots" src="{2}.svg" />
+<img type="image" id="dieDots" src="{3}.svg" />
+<img type="image" id="dieDots" src="{4}.svg" />
+<img type="image" id="dieDots" src="{5}.svg" />
+<img type="image" id="dieDots" src="{6}.svg" />
 <div class="page">
     <div class="sidebar mainPanel">
         <table id="configureTable">
@@ -55,8 +62,8 @@
 
     <div class="verticalGroup">
         <div class="main mainPanel">
+            <button id="roll" @onclick="Roll">ROLL</button>
             <DiceBox>
-                <td><button id="roll" @onclick="Roll">ROLL</button></td>
                 @foreach (DiceDetails die in Dice)
                 {
                     @for (int i = 0; i < die.Count; i++)
