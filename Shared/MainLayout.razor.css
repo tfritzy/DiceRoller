@@ -88,7 +88,9 @@
     .mainPanel {
         margin-bottom: 5px;
         width: 100%;
-        box-shadow: 0;
+        box-shadow: none;
+        border-radius: 3px;
+        border-width: 1px;
     }
     .main {
         bottom: 205px;
