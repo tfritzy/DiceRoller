@@ -8,18 +8,18 @@
     overflow: hidden;
 }
 
+input#toggleMenu {
+    border-width: 0px;
+    width: 25px;
+    height: 25px;
+}
+
 div#topBar {
-    margin: 1vh;
-    background-color: white;
-    border-width: 1px;
-    border-color: lightgray;
-    border-radius: 5px;
-    box-shadow: 0 5px 5px 0 rgb(60 66 87 / 2%), 0 5px 5px 0 rgb(0 0 0 / 3%);
-    border-style: solid;
+    margin-right: 10px;
 }
 
 button {
-    width: 40px;
+    width: 5vh;
     height: 20px;
 }
 
@@ -32,7 +32,6 @@ button {
     margin-bottom: 10px;
     margin-right: 10px;
     min-width: 52ex;
-    padding-left: 15px;
     padding-top: 5px;
 }
 
@@ -98,16 +97,15 @@ button {
         position: absolute;
         height: 100vh;
         top: 0;
-        width: 66% !important;
+        width: 66vw !important;
         background-color: white;
-        border-radius: 10px;
+        overflow: hidden;
     }
     .mainPanel {
-        margin-bottom: 5px;
         width: 100%;
         box-shadow: none;
-        border-radius: 3px;
-        border-width: 1px;
+        border-radius: 0px;
+        border-top-width: 1px;
     }
     .main {
         bottom: 205px;
@@ -128,12 +126,20 @@ button {
     }
     .verticalGroup {
         position: absolute;
-        top: 4vh;
+        top: 0;
         bottom: 0;
         width: 100%;
+        left: 45px;
     }
     div#topBar {
-        height: 5vh;
+        position: absolute;
+        right:5px;
+        top: 10px;
+    }
+    table#configureTable {
+        border-collapse: collapse;
+        overflow: auto;
+        height: 100%;
     }
 }
 
@@ -158,7 +164,6 @@ button {
     }
     .sidebar {
         max-height: 100vh;
-        width: 40vw;
     }
     .main {
         max-height: 72vh;
@@ -203,15 +208,21 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    padding: 10px;
 }
 
 td,
 th {
-    border-top: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
-    text-align: left;
-    padding: 3px;
+    height: 30px;
+    line-height: 0;
+}
+
+td {
+    height: 80px;
+}
+
+td#colorSelectBox {
+    line-height: 0px;
 }
 
 DiceBox {
@@ -261,7 +272,7 @@ input#smallDie {
 }
 
 input#smallInput {
-    width: 60px;
+    width: 5vh;
     border-radius: 5px;
     border-width: 0px;
     padding: 4px;
@@ -271,34 +282,31 @@ input#smallInput {
 }
 
 input#icon {
-    width: 40px;
-    height: 40px;
+    width: 5vh;
+    height: 5vh;
     display: inline-block;
     margin-left: 3px;
 }
 
 table#configureTable {
-    table-layout: fixed;
+    margin-top: 30px;
 }
 
 button#colorSelect {
-    border-radius: 15px;
     width: 25px;
     height: 25px;
-    display: inline-block;
-    margin: 3px;
-    border-width: 2px;
-    border-color: white;
+    border-width: 0px;
     border-style: solid;
+    padding: 0;
+    margin: 0;
 }
 
 button#selectShape {
     border-radius: 5px;
-    margin: 3px;
     border-width: 0px;
     width: 4eX;
     background-color: lightgray;
-    padding: 4px;
+    height: 3eX;
 }
 
 input#delete {
@@ -385,7 +393,7 @@ div#sumBoxText {
     display: inline-block;
     text-align: center;
     width: 30px;
-    height: 40px;
+    height: 5vh;
     position: absolute;
     margin-top: 30px;
     font-size: x-large;
@@ -402,4 +410,33 @@ img#decal {
     height: 80%;
     left: 0px;
     margin: 10%;
+}
+
+button#incSideCount {
+    position: relative;
+    top: 0;
+    height: 30%;
+    width: 100%;
+}
+
+button#decSideCount {
+    position: relative;
+    bottom: 0;
+    height: 30%;
+    width: 100%;
+}
+
+input#sideCount {
+    width: 100%;
+    height: 40%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
